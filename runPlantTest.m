@@ -1,5 +1,5 @@
-% RCP実機テストの自動化スクリプト         %
-% 作成者:網本　亮  作成日:2020/10/13     %
+% RCP実機テストの自動化スクリプト       %
+% 作成者:網本　亮  作成日:2020/10/13    %
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % 制御モデルのテストデータ（matファイル）をエクセルへ変換　%
@@ -11,9 +11,29 @@ OutputHead = num2cell(importdata("InputIF_Out_Header.xlsx"));
 InputData = vertcat(InputHead,InputVal);
 OutputData = vertcat(OutputHead,OutputVal);
 
-% モデルの入出力データを”テストファイル＿マクロ機能付き”へ出力
-xlswrite("TestGraphOutput.xlsm",InputVal,"InputIF_In",'A2:J412');
-xlswrite("TestGraphOutput.xlsm",OutputVal,"InputIF_Out",'A2:I412');
+% モデルの入出力データをグラフ変換
+[n,p] = size(InputVal);
+[o,q] = size(OutputVal);
+figure;
+xi = cell2table(InputVal(1:end , 1));
+yi = cell2table(InputVal(1:end , 2));
+subplot(p-1,2,1),plot(xi.Var1,yi.Var1);
+for s = 1:p-2
+    % 入力
+    xi = cell2table(InputVal(1:end , 1));
+    yi = cell2table(InputVal(1:end , s+2));
+    subplot(p-1,2,2*s+1),plot(xi.Var1,yi.Var1);
+    % 出力
+    xo = cell2table(OutputVal(1:end , 1));
+    yo = cell2table(OutputVal(1:end , s+1));
+    subplot(p-1,2,2*s+2),plot(xo.Var1,yo.Var1);
+end
+
+savefig("TestGraph");
+
+% % モデルの入出力データを”テストファイル＿マクロ機能付き”へ出力
+% xlswrite("TestGraphOutput.xlsm",InputVal,"InputIF_In",'A2:J412');
+% xlswrite("TestGraphOutput.xlsm",OutputVal,"InputIF_Out",'A2:I412');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % テストデータのグラフ出力をエクセルのマクロ機能で実行　   %
