@@ -31,11 +31,13 @@ end
 
 savefig("TestGraph");
 
-% 
+% モデルの入出力データを”テストファイル＿マクロ機能付き”へ出力
+xlswrite("TestGraphOutput.xlsm",InputVal,"InputIF_In",'A2:J412');
+xlswrite("TestGraphOutput.xlsm",OutputVal,"InputIF_Out",'A2:I412');
 
-% % モデルの入出力データを”テストファイル＿マクロ機能付き”へ出力
-% xlswrite("TestGraphOutput.xlsm",InputVal,"InputIF_In",'A2:J412');
-% xlswrite("TestGraphOutput.xlsm",OutputVal,"InputIF_Out",'A2:I412');
+% テスト結果確認実施
+xlswrite("TestResultChk.xlsx",InputVal,"InputIF_In",'A2:J412');
+xlswrite("TestResultChk.xlsx",OutputVal,"InputIF_Out",'A2:I412');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % テストデータのグラフ出力をエクセルのマクロ機能で実行　   %
